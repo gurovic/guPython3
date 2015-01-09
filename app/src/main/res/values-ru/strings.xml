@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="answer">ОТВЕТ</string>
+    <string name="comment">КОММЕНТАРИЙ</string>
+    <string name="app_name">guPython3</string>
+    <string name="easy">ЛЕГКО</string>
+    <string name="difficult">СЛОЖНО</string>
+    <string name="medium">СРЕДНЕ</string>
+    <string name="question">ВОПРОС</string>
+    <string name="no_questions">Сейчас для вас больше нет вопросов &amp;ndash; возвращайтесь попозже!</string>
+
+</resources>
