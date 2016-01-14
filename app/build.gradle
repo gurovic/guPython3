@@ -8,8 +8,8 @@ android {
         applicationId "ru.gurovic.gupython3"
         minSdkVersion 11
         targetSdkVersion 11
-        versionCode 5
-        versionName "1.4"
+        versionCode 10
+        versionName "2.0"
     }
     buildTypes {
         release {

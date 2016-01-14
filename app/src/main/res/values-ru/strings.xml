@@ -8,5 +8,7 @@
     <string name="medium">СРЕДНЕ</string>
     <string name="question">ВОПРОС</string>
     <string name="no_questions">Сейчас для вас больше нет вопросов &amp;ndash; возвращайтесь попозже!</string>
+    <string name="title_activity_start">Как это работает?</string>
+    <string name="description">1. Прочитай вопрос.\n2. Постарайся на него ответить.\n3. Жми на ОТВЕТ\n4. Сравни свой ответ с правильным.\n5. Оцени свои знания.\n\nВ зависимости от твоей оценки вопрос повторится почти сразу, через день или месяц, что позволит усвоить тему максимально надежно.</string>
 
 </resources>

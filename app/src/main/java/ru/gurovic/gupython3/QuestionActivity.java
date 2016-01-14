@@ -17,12 +17,15 @@ import android.webkit.WebView;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
-
-// TODO оповещения о появлении вопросов
-// TODO Activity c описанием приложения
-// TODO разобраться с задержкой отображения на странице ответов (парсинг HTML?)
-// TODO отключить хардварную кнопку Back???
-
+// TODO Настроить google analytics:    https://developers.google.com/analytics/devguides/collection/android/v4/campaigns
+// TODO feature оповещения о появлении вопросов
+// TODO bug разобраться с задержкой отображения на странице ответов (парсинг HTML?)
+// TODO enhancement отключить хардварную кнопку Back???
+// TODO critical bug 4'' landscape - помещается только 11 строк - проблемы с вопросом 38 - и он может закрывать кнопки собой
+// TODO feature ссылки на теорию и видео по теме вопроса
+// TODO enhancement на странице ответа вопрос слишком бросается в глаза - затемнить фон?
+// TODO design отступ перед словами Ответ и Комментарий
+// TODO разобраться с подписью под иконкой (названием приложения) - сейчас Как это работает?
 
 
 public class QuestionActivity extends ActionBarActivity implements OnClickListener {
@@ -114,18 +117,45 @@ public class QuestionActivity extends ActionBarActivity implements OnClickListen
 
     class DBHelper extends SQLiteAssetHelper {
 
-
         private static final String DATABASE_NAME = "guPython3-v0.1";
-        private static final int DATABASE_VERSION = 1;
+        private static final int DATABASE_VERSION = 9;
 
         public DBHelper(Context context) {
+
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            SQLiteDatabase db = this.getWritableDatabase();
+            // добавляем в nexttime начальные записи, время = id вопроса
+            updateNexttime(db);
+
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            // TODO обновление базы данных - механизм
-            Log.d("UPGRADE", Integer.toString(oldVersion) + Integer.toString(newVersion));
+            // Таблицу questions очищаем и заполняем по-новой,
+            // для этого в assets/databases кладем guPython3-v0.1_upgrade_1-X.sql (X - новая версия)
+            // Исправление одинарных кавычек на двойные:
+            // python3.4 quotes_sqlite.py </Users/vladimirgurovic/questions.sql >/Users/vladimirgurovic/AndroidStudioProjects/guPython3/app/src/main/assets/databases/guPython3-v0.1_upgrade_1-X.sql
+
+            super.onUpgrade(db, 1, newVersion); // oldVersion = 1 для удобства обновления: для любой версии обновление работает одинаково
+
+            // добавляем в nexttime отсутствующие записи
+            updateNexttime(db);
+
+            Log.d("UPGRADE", Integer.toString(oldVersion) + " -> " + Integer.toString(newVersion));
+
+        }
+
+        private void updateNexttime(SQLiteDatabase db) {
+            Cursor data;
+            data = db.rawQuery("SELECT questions._id from questions left join nexttime on questions._id=nexttime.question_id " +
+                               "where nexttime.question_id is NULL", null);
+            if (data.getCount() > 0) {
+                data.moveToFirst();
+                do {
+                    Long id = data.getLong(0);
+                    db.execSQL("INSERT INTO nexttime VALUES(" + id.toString() +"," + id.toString() +"," + id.toString() + ");");
+                } while (data.moveToNext());
+            }
         }
     }
 

@@ -1,9 +1,7 @@
 package ru.gurovic.gupython3;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -48,10 +46,13 @@ public class AnswerActivity extends ActionBarActivity implements OnClickListener
         question_text.loadDataWithBaseURL(null, intent.getStringExtra("question"), "text/html", "utf-8", null);
 
 
-        // TODO не показывать блок Комментарий, если он пустой
         WebView comment_text;
         comment_text = (WebView) findViewById(R.id.comment);
-        comment_text.loadDataWithBaseURL(null, intent.getStringExtra("comment"), "text/html", "utf-8", null);
+        if (intent.getStringExtra("comment")!=null) {
+            comment_text.loadDataWithBaseURL(null, intent.getStringExtra("comment"), "text/html", "utf-8", null);
+        } else {
+            findViewById(R.id.comment_title).setVisibility(View.INVISIBLE);
+        }
 
         question_id = intent.getLongExtra("question_id", 0);
 
@@ -87,18 +88,14 @@ public class AnswerActivity extends ActionBarActivity implements OnClickListener
 
     class DBHelper extends SQLiteAssetHelper {
 
-
+        // TODO refactor разобраться, как не дублировать этот класс в двух файлах
         private static final String DATABASE_NAME = "guPython3-v0.1";
-        private static final int DATABASE_VERSION = 1;
+        private static final int DATABASE_VERSION = 9;
 
         public DBHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        }
     }
 
 

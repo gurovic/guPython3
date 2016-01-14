@@ -2,15 +2,14 @@
 <resources>
 
     <string name="app_name">guPython3</string>
-
     <string name="answer">ANSWER</string>
     <string name="question">QUESTION</string>
     <string name="comment">COMMENT</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="difficult">Difficult</string>
-
     <string name="no_questions">There are no more questions for you just now! Come again later!</string>
-
+    <string name="title_activity_start">How does it work?</string>
+    <string name="description">Just now - only in Russian!</string>
 
 </resources>
